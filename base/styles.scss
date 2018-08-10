@@ -1,0 +1,500 @@
+$color-background: rgba(255,255,255,1);
+$color-base: rgba(0,0,0,1);
+$color-accent-one: #2e94fe;
+$color-accent-two: rgba(0,0,0,0.85);
+$color-muted: rgba(0,0,0,0.5);
+
+
+// Font
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i');
+
+html {
+	margin: 0;
+	padding: 0;
+}
+
+
+body {
+	background-color: grey;
+	font-family: 'Open Sans', sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+
+section {
+	display: none;
+}
+
+// Views
+
+[data-content="*"] {
+	section {
+		padding: 60px;
+		display: inline-block;
+		float: left;
+	}
+}
+
+body.screenshot:not([data-content="*"]) {
+	background-color: white;
+	section {
+		transform: scale(3);
+		transform-origin: top left;
+
+		h3 {
+			display: none;
+		}
+	}
+
+	&[data-size="square"] {
+		width: 900px;
+		height: 900px;
+		overflow: hidden;
+	}
+	
+	&[data-size="vertical"] {
+		width: 900px;
+		height: 1200px;
+		overflow: hidden;
+	}
+
+	&[data-size="horizontal"] {
+		width: 1200px;
+		height: 900px;
+		overflow: hidden;
+	}
+}
+
+[data-content="article"] {
+	#article {
+		display: block;
+	}
+}
+
+[data-content="video"] {
+	#video {
+		display: block;
+	}
+}
+
+
+.card {
+	background-color: $color-background;
+	color: $color-base;
+	position: relative;
+	box-sizing: border-box;
+
+	&[data-size="square"] {
+		width: 300px;
+		height: 300px;
+		overflow: hidden;
+	}
+	
+	&[data-size="vertical"] {
+		width: 300px;
+		height: 600px;
+		overflow: hidden;
+
+		.card-extra-element-after {
+			width: 60px;
+			height: 60px;
+			top: 20px;
+			right: 20px;
+			opacity: 0.6;
+		}
+
+		.card-image-overlay {
+			display: block;
+		}
+	}
+
+	&[data-size="horizontal"] {
+		width: 600px;
+		height: 300px;
+		overflow: hidden;
+	}
+
+	&.card-wide {
+		
+	}
+
+	&.card-vertical {
+		
+	}
+
+	&.card-no-headline {
+
+		.card-extra-element-before {
+			position: absolute;
+			width: 100%;
+			height: 40px;
+			bottom: 0;
+			background-color: $color-background;
+			z-index: 2;
+			opacity: 0.7;
+		}
+	}
+}
+	
+.card-image {
+	width: 100%;
+	height: 162px;
+	overflow: hidden;
+	position: relative;
+	z-index:1;
+
+	.card-no-label & {
+		height: 180px;
+	}
+
+	.card-no-headline & {
+		height: 100%;
+	}
+
+	[data-size="vertical"] & {
+		height: 400px;
+		width: calc(100% - 40px);
+		left: 20px;
+		top: 20px;
+	}
+
+	[data-size="vertical"].card-no-headline & {
+		height: 100%;
+	}
+
+	&.card-image-contain {
+		
+		.card-image-asset {
+			object-fit: contain;
+			z-index: 2;
+		}
+		
+		&::before {
+			content: "";
+			display: inline-block;
+			position: absolute;
+			top: -40px;
+			bottom: -40px;
+			left: -40px;
+			right: -40px;
+			filter: blur(20px);
+			background-size: cover;
+			background-position: center center;
+			opacity: 0.75;
+			z-index: 1;
+			background-image: url(assets/placeholder.jpg);
+		}
+	}
+}
+
+.card-image-asset {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.card-image-overlay {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 3;
+}
+
+.card-label {
+	position: relative;
+	height: 18px;
+	margin: 10px 10px 0 10px;
+	background-size: contain;
+	backgroud-position: left center;
+	background-repeat: no-repeat;
+	z-index:3;
+
+	&[data-content="none"] {
+		display: none !important;
+	}
+
+	.card-no-headline & {
+		top: -40px;
+	}
+
+}
+
+.card-headline {
+	font-size: 19px;
+	position: relative;
+	width: 100%;
+	height: 73px;
+	overflow: hidden;
+	box-sizing: border-box;
+	line-height: 1.2;
+	padding: 5px 10px 10px 10px;
+	font-weight: 700;
+	z-index:3;
+	display: -webkit-box;
+	overflow: hidden;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+
+	&[data-content="none"] {
+		display: none !important;
+	}
+
+	&[data-content]::before {
+		content: attr(data-content);
+	}
+
+	&:not([data-content])::before {
+		content: "Headline Goes Here";
+	}
+
+	&[data-content="*"]::before {
+		content: "Lorem Ipsum Dolor Sit Ameti Consectetuer Adipiscing Elit Aenean"; // 65 Characters
+	}
+}
+
+.card-cta {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	margin-bottom: 10px;
+	margin-right: 10px;
+	z-index:3;
+}
+
+.card-cta-text {
+	font-size: 14px;
+	font-weight: 700;
+	letter-spacing: 0.03em;
+	text-transform: uppercase;
+	color: $color-accent-one;
+
+	&[data-content]::before {
+		content: attr(data-content);
+	}
+
+	&:not([data-content])::before {
+		content: "Click Here";
+	}
+}
+
+.card-cta-icon {
+	width: 14px;
+	height: 14px;
+	display: inline-block;
+	position: relative;
+	top: 2px;
+	background-image: url(assets/right-arrow.svg);
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center center;
+}
+
+
+.card-type-article {
+	.card-cta-text {
+		&[data-content="*"]::before {
+			content: "Read Article";
+		}
+	}
+
+	.card-label {
+		&[data-content="*"]::before {
+			content: "Publisher Content";
+		}
+	}
+
+	.card-extra-element-after {
+		background-color: $color-accent-one;
+		background-image: url(assets/icon-article.svg);
+	}
+}
+
+.card-type-custom {
+	
+	.card-cta-text {
+		&[data-content="*"]::before {
+			content: "Click Here";
+		}
+	}
+
+	.card-label {
+		&[data-content="*"]::before {
+			content: "Ad Content";
+		}
+	}
+}
+
+.card-type-shopper {
+	.card-cta-text {
+		&[data-content="*"]::before {
+			content: "Shop Now";
+		}
+	}
+
+	.card-label {
+		&[data-content="*"]::before {
+			content: "Product";
+		}
+	}
+
+	.card-image.card-image-contain {
+		
+		.card-image-asset {
+			object-fit: contain;
+			z-index: 2;
+			width: 90%;
+			height: 90%;
+			top: 5%;
+			left: 5%;
+		}
+
+	}
+
+	.card-extra-element-after {
+		background-color: $color-accent-one;
+		background-image: url(assets/icon-shop.svg);
+	}
+}
+
+.card-type-image {
+	
+	.card-cta-text {
+		&[data-content="*"]::before {
+			content: "View";
+		}
+	}
+
+	.card-label {
+		&[data-content="*"]::before {
+			content: "Image";
+		}
+	}
+
+	.card-cta-icon {
+		background-image: url(assets/icon-view.svg);
+		top: 3px;
+		width: 16px;
+		height: 16px;
+	}
+
+	.card-extra-element-after {
+		background-color: $color-accent-one;
+		background-image: url(assets/icon-picture.svg);
+	}
+}
+
+.card-type-ad {
+
+	.card-image {
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.card-label {
+	&[data-content] {
+		font-size: 12px;
+	    font-weight: 700;
+	    letter-spacing: 0.03em;
+	    text-transform: uppercase;
+	    color: $color-muted;
+		
+		&::before {
+			content: attr(data-content);
+		}
+	}
+
+	&[data-content="cnn.com"] {
+		background-image: url(https://cdn.worldvectorlogo.com/logos/cnn-logo.svg);
+		
+		&::before {
+			content: "";
+		}
+	}
+}
+
+.card-extra-element-after {
+	width: 50px;
+	height: 50px;
+	display: inline-block;
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 10;
+	background-size: 75% 75%;
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+.card-type-video {
+	.card-cta-text {
+		&[data-content="*"]::before {
+			content: "Watch Video";
+		}
+	}
+
+	.card-label {
+		&[data-content="*"]::before {
+			content: "Publisher Video";
+		}
+
+		&[data-content="none"] {
+			display: none;
+		}
+	}
+
+	.card-cta-icon {
+		background-image: url(assets/icon-play-cta.svg);
+		top: 3px;
+		width: 16px;
+		height: 16px;
+	}
+
+	.card-image-overlay {
+		display: none;
+	}
+
+
+	.card-image-overlay::before, .card-image-overlay::after {
+		content: "";
+		width: 60px;
+		height: 60px;
+		display: inline-block;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		border-radius: 50%;
+		background-color: white;
+		opacity: 0.5;
+
+	}
+
+	&.card-no-headline {
+		.card-image-overlay::before, .card-image-overlay::after {
+			top: calc(50% - 20px);
+		}
+	}
+
+	.card-image-overlay::after {
+		background-color: transparent;
+		background-image: url(assets/icon-play.svg);
+		background-size: 100% 100%;
+		background-repeat: no-repeat;
+		background-position: center center;
+	}
+
+	.card-extra-element-after {
+		background-color: $color-accent-one;
+		background-image: url(assets/icon-play-triangle.svg);
+	}
+}
+
+
